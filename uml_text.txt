@@ -1,0 +1,40 @@
+@startuml
+class Category {
+    +id: int
+    +name: String
+    +subcategories: List<Category>
+    +products: List<Product>
+}
+
+abstract class Product {
+    +id: int
+    +name: String
+    +price: float
+    +getPrice(): float
+}
+
+class RegularProduct extends Product {
+    +discount: float
+}
+
+class ProductGroup extends Product {
+    +products: List<Product>
+    +discount: float
+    +calculatePrice(): float
+}
+
+class PriceCalculationStrategy {
+    +calculatePrice(products: List<Product>): float
+}
+
+class DiscountStrategy extends PriceCalculationStrategy {
+    +discountPercentage: float
+}
+
+class FreeProductStrategy extends PriceCalculationStrategy {
+    +everyNth: int
+}
+
+Category "1" -- "*" Product : contains
+ProductGroup "1" -- "  *" Product : includes
+@enduml
